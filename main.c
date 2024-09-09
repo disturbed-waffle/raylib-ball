@@ -22,6 +22,7 @@ int main(){
     float impulse_time = 0.1;
     float cooldown = 2.0;
     int can_force = 1;
+    int low_speed = 20; // when to disable gravity and apply friction
 
     const char *text = "BALL";
     int font_size = 30;
@@ -76,11 +77,10 @@ int main(){
             if (pos.y-radius <= 0 && velocity.y < 0) velocity.y *= dampening;
             
             // Friction and Ground
-            if (pos.y+radius >= window_height - 3 && abs(velocity.y) < 20){
+            if (pos.y+radius >= window_height - 3 && abs(velocity.y) < low_speed){
                 int friction = 80;
                 velocity.x = velocity.x>0 ? velocity.x - friction*dt : velocity.x + friction*dt;
                 velocity.y = abs(velocity.y) < 4 ? 0 : velocity.y;
-                gravity = 0;
             }
 
             pos.x += velocity.x*dt;
