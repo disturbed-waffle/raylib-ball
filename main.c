@@ -86,12 +86,13 @@ int main(){
             pos.x += velocity.x*dt;
             pos.y += velocity.y*dt;     
             
+            
             // Drawing
             char debug[64]; sprintf(debug, "speed\n\n%.0f", Vector2Length(velocity));
             DrawText(debug,5,5,32,WHITE);
             DrawText("Cooldown",window_width-MeasureText("Cooldown",32)-5,5,32,WHITE);
-            DrawRing((Vector2){window_width-80,80}, 20,40, 0,300,20,ORANGE);
-
+            float ring_prog = can_force ? 1 : (GetTime()-cooldown_start_time)/cooldown; 
+            DrawRing((Vector2){window_width-80,80}, 20,40, 0,(ring_prog*360),20,ORANGE);
             Vector2 mouse = GetMousePosition();
             DrawLineEx(pos,mouse,3,WHITE);
             
