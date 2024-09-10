@@ -4,21 +4,22 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <stdint.h>
 
 int main(){
     const int window_height = 720; 
     const int window_width = 1280;
     InitWindow(window_width,window_height, "Your mom");
     SetTargetFPS(120);
-    // Circle
+    DisableCursor();
+
+    // Game Variables
     float x = 400.0, y = 300.0;
     int radius = 80;
-    float mass = 10.0;
     float dampening = -0.6;
 
     float gravity = 490.0; // scale of 1m = 50 pixels
-    float impulse = 1e5;
+    float impulse = 15000;
     float impulse_time = 0.1;
     float cooldown = 2.0;
     int can_force = 1;
@@ -60,47 +61,58 @@ int main(){
                 gravity = 490;
                 force_start_time = GetTime();
                 cooldown_start_time = GetTime();
-                // direction to mouse
-                Vector2 dir = Vector2Subtract(GetMousePosition(),pos);
-                dir = Vector2Normalize(dir);
+                
+                // Direction to mouse
+                Vector2 mouse = Vector2Subtract(GetMousePosition(),pos);
+                Vector2 dir = Vector2Normalize(mouse);
+                float impulse_scale = Vector2Length(mouse)/window_height; 
 
-                Vector2 force = Vector2Scale(dir, impulse);
-                accel = Vector2Add(accel, Vector2Scale(force,1.0/mass));
+                Vector2 force = Vector2Scale(dir, impulse*impulse_scale);
+                accel = Vector2Add(accel, force);
                 can_force = 0;
             }
             velocity = Vector2Add(velocity, Vector2Scale(accel,dt));
-            
+
             // Colision
             if (pos.x+radius >= window_width && velocity.x > 0) velocity.x *= dampening;
             if (pos.x-radius <= 0 && velocity.x < 0) velocity.x *= dampening;
             if (pos.y+radius >= window_height && velocity.y > 0) velocity.y *= dampening;
             if (pos.y-radius <= 0 && velocity.y < 0) velocity.y *= dampening;
             
-            // Friction and Ground
+            // Friction
             if (pos.y+radius >= window_height - 3 && abs(velocity.y) < low_speed){
-                int friction = 80;
+                int friction = 100;
                 velocity.x = velocity.x>0 ? velocity.x - friction*dt : velocity.x + friction*dt;
-                velocity.y = abs(velocity.y) < 4 ? 0 : velocity.y;
             }
 
             pos.x += velocity.x*dt;
             pos.y += velocity.y*dt;     
             
-            
             // Drawing
             char debug[64]; sprintf(debug, "speed\n\n%.0f", Vector2Length(velocity));
             DrawText(debug,5,5,32,WHITE);
+            
             DrawText("Cooldown",window_width-MeasureText("Cooldown",32)-5,5,32,WHITE);
             float ring_prog = can_force ? 1 : (GetTime()-cooldown_start_time)/cooldown; 
             DrawRing((Vector2){window_width-80,80}, 20,40, 0,(ring_prog*360),20,ORANGE);
+
+            //Line
+            int triangle_len = 15;
             Vector2 mouse = GetMousePosition();
-            DrawLineEx(pos,mouse,3,WHITE);
-            
+            Vector2 mouse_dir = Vector2Normalize(Vector2Subtract(mouse,pos));
+            DrawLineEx(pos,mouse,4,WHITE);
+            Vector2 mouse_to_point = Vector2Rotate(mouse_dir,(-7*PI)/6);
+            mouse_to_point = Vector2Scale(mouse_to_point, triangle_len);  
+            Vector2 point1 = Vector2Add(mouse,mouse_to_point);
+            mouse_to_point = Vector2Rotate(mouse_dir,(7*PI)/6);
+            mouse_to_point = Vector2Scale(mouse_to_point, triangle_len);
+            Vector2 point2 = Vector2Add(mouse,mouse_to_point);
+            DrawTriangle(point1,Vector2Add(mouse, Vector2Scale(mouse_dir,5)),point2, WHITE);
+
             DrawCircle((int) pos.x,(int) pos.y, radius, RED);
             int offset = MeasureText(text, font_size)/2;
             DrawText(text,pos.x-offset,pos.y,font_size,WHITE); 
-
-            ClearBackground(DARKPURPLE);
+            ClearBackground((Color){30,30,30,UINT8_MAX});
            
         }
         EndDrawing();

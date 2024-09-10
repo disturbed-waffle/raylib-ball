@@ -4,6 +4,9 @@
         "string.h": "c",
         "time.h": "c",
         "string": "c",
-        "format": "c"
+        "format": "c",
+        "inttypes.h": "c",
+        "stdio.h": "c",
+        "raylib.h": "c"
     }
 }
