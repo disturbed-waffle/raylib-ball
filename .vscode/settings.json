@@ -7,6 +7,9 @@
         "format": "c",
         "inttypes.h": "c",
         "stdio.h": "c",
-        "raylib.h": "c"
+        "raylib.h": "c",
+        "stdint.h": "c",
+        "raymath.h": "c",
+        "raygui.h": "c"
     }
 }
