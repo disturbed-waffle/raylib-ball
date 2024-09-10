@@ -7,4 +7,3 @@ all: main.c
 
 run: all
 	./main
-

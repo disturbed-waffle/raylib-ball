@@ -1,5 +1,4 @@
 #include <raylib.h>
-
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #include "style_dark.h"
@@ -10,7 +9,7 @@ int main()
     SetTargetFPS(60);
     GuiLoadStyleDark();
     bool showMessageBox = false;
-
+    bool boo = true;
 
     while (!WindowShouldClose())
     {

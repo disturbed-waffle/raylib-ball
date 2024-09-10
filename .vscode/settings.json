@@ -10,6 +10,8 @@
         "raylib.h": "c",
         "stdint.h": "c",
         "raymath.h": "c",
-        "raygui.h": "c"
+        "raygui.h": "c",
+        "style_dark.h": "c",
+        "rcamera.h": "c"
     }
 }
