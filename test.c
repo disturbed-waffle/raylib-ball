@@ -19,7 +19,6 @@ int main()
             ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
 
             if (GuiButton((Rectangle){ 24, 24, 120, 30 }, "#191#Show Message")) showMessageBox = true;
-
             if (showMessageBox)
             {
                 int result = GuiMessageBox((Rectangle){ 85, 70, 250, 100 },

@@ -16,7 +16,7 @@ int main(){
     // Game Variables
     float x = 400.0, y = 300.0;
     int radius = 80;
-    float dampening = -0.6;
+    float dampening = -0.7;
 
     float gravity = 490.0; // scale of 1m = 50 pixels
     float impulse = 15000;
@@ -55,8 +55,7 @@ int main(){
         }
 
         // Force
-        if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT))&& can_force){
-            gravity = 490;
+        if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) && can_force){
             force_start_time = GetTime();
             cooldown_start_time = GetTime();
             
