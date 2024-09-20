@@ -1,9 +1,10 @@
 CFLAGS = -Wall
-LFLAGS = -l:libraylib.a -lGL -lm -lpthread -ldl -lrt -lX11
+LFLAGS = -l:libm.so -lGL -lpthread -ldl -lrt -lX11
+LIBS = -l:libraylib.a
 
 all: main.c
-	gcc $(CFLAGS) main.c $(LFLAGS) -o main
-
+	# Linking object file before static libraries
+	clang $(CFLAGS) main.c $(LIBS) $(LFLAGS) -o main
 
 run: all
 	./main
