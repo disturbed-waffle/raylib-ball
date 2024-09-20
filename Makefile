@@ -1,5 +1,5 @@
 CFLAGS = -Wall
-LFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+LFLAGS = -l:libraylib.a -lGL -lm -lpthread -ldl -lrt -lX11
 
 all: main.c
 	gcc $(CFLAGS) main.c $(LFLAGS) -o main
