@@ -1,5 +1,5 @@
 CFLAGS = -Wall
-LFLAGS = lib/libraylib.a -lm -lGL -lpthread -ldl -lrt -lX11
+LFLAGS = lib/libraylib.a lib/libm.so -lGL -lpthread -ldl -lrt -lX11
 
 all: main.c
 	gcc $(CFLAGS) main.c $(LIBS) $(LFLAGS) -o main
