@@ -6,6 +6,10 @@
 #include <string.h>
 #include <time.h>
 
+void stinky(char *poop){
+    printf("%s", poop);
+}
+
 int main()
 {
     const int window_height = 720;
